@@ -1,5 +1,6 @@
 {
   "tiles": {
-    "dirt": "dirt.jpg"
+    "dirt": "dirt.jpg",
+    "stone": "stone.jpg"
   }
 }

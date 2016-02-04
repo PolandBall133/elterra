@@ -7,7 +7,15 @@ class GameWorld
     @blocks = blocks
   end
 
+  def translate_position(xpos, ypos)
+    xpos*@height+ypos
+  end
+
   def block_at(xpos, ypos)
-    @blocks[xpos*@height+ypos]
+    @blocks[translate_position(xpos, ypos)]
+  end
+
+  def set_block_at(xpos, ypos, val)
+    @blocks[translate_position(xpos, ypos)] = val
   end
 end

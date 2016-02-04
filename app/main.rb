@@ -2,9 +2,12 @@ require 'gosu'
 
 require './game/core/tiles/load'
 require './game/core/tiles/tile_data'
+require './game/core/world/game_world'
+require '../app/game/core/world/block'
+require '../app/game/core/camera/camera'
 
 module ZOrder
-  BACKGROUND, STARS, PLAYER, USER_INTERFACE = *0..3
+  BACKGROUND, TILES, USER_INTERFACE = *0..2
 end
 
 class GameWindow < Gosu::Window
@@ -13,20 +16,27 @@ class GameWindow < Gosu::Window
     self.caption = 'Elterra'
 
     @tile_data = TileData.new(Tiles.load_tiles('media/tiles'))
+    @world = GameWorld.new(40, 40, Array.new(40*40, Block.new(1)))
+
+    @camera = Camera.new(@world, @tile_data)
   end
 
   def update
+    if(mouse_x)
+      @camera.position_x = mouse_x.round
+    end
+    if(mouse_y)
+      @camera.position_y = mouse_y.round
+    end
+    # || 0
+    #|| 0
   end
 
   def draw
-    @tile_data.ids[0].image.draw(0, 0, 1)
+    @camera.draw(ZOrder::TILES, width, height)
   end
 
-  def button_down(id)
-    if id == Gosu::KbEscape
-      close
-    end
-  end
+
 end
 
 window = GameWindow.new

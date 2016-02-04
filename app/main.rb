@@ -17,7 +17,8 @@ class GameWindow < Gosu::Window
 
     @tile_data = TileData.new(Tiles.load_tiles('media/tiles'))
     @world = GameWorld.new(40, 40, Array.new(40*40, Block.new(1)))
-
+    @world.set_block_at(0, 0, Block.new(0))
+    @world.set_block_at(10, 10, Block.new(0))
     @camera = Camera.new(@world, @tile_data)
   end
 
@@ -36,7 +37,9 @@ class GameWindow < Gosu::Window
     @camera.draw(ZOrder::TILES, width, height)
   end
 
-
+  def needs_cursor?
+    true
+  end
 end
 
 window = GameWindow.new

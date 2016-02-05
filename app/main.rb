@@ -3,11 +3,12 @@ require 'gosu'
 require './game/core/tiles/load'
 require './game/core/tiles/tile_data'
 require './game/core/world/game_world'
-require '../app/game/core/world/block'
-require '../app/game/core/camera/camera'
+require './game/core/world/block'
+require './game/core/camera/camera'
+require './game/core/actors/player'
 
 module ZOrder
-  BACKGROUND, TILES, USER_INTERFACE = *0..2
+  BACKGROUND, TILES, PLAYER, USER_INTERFACE = *0..3
 end
 
 class GameWindow < Gosu::Window
@@ -19,27 +20,26 @@ class GameWindow < Gosu::Window
 
     @world = GameWorld.load('saves/test.elterra.save')
 
+    @player = Player.new(ZOrder::PLAYER, 10, 10)
+    @actors = [@player]
+
     @camera = Camera.new(@world, @tile_data)
+    @camera.set_viewport(width, height)
+
+    @camera.focus(@player.physical_attributes.body)
   end
 
   def update
-    if button_down? Gosu::KbLeft
-      @camera.position_x -= 1
-    end
-    if button_down? Gosu::KbRight
-      @camera.position_x += 1
-    end
+    @player.handle_input(self)
 
-    if button_down? Gosu::KbUp
-      @camera.position_y -= 1
-    end
-    if button_down? Gosu::KbDown
-      @camera.position_y += 1
+    @actors.each do |actor|
+      actor.physical_attributes.body.update_position(update_interval)
     end
   end
 
   def draw
-    @camera.draw(ZOrder::TILES, width, height)
+    @camera.draw_tiles(ZOrder::TILES)
+    @camera.draw_actors(@actors)
   end
 
   def needs_cursor?

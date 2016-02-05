@@ -6,6 +6,7 @@ require './game/core/world/game_world'
 require './game/core/world/block'
 require './game/core/camera/camera'
 require './game/core/actors/player'
+require './game/core/physics/physics_core'
 
 module ZOrder
   BACKGROUND, TILES, PLAYER, USER_INTERFACE = *0..3
@@ -18,7 +19,7 @@ class GameWindow < Gosu::Window
 
     @tile_data = TileData.new(Tiles.load_tiles('media/tiles'))
 
-    @world = GameWorld.load('saves/test.elterra.save')
+    @world = GameWorld.load('saves/playground.elterra.save')
 
     @player = Player.new(ZOrder::PLAYER, 10, 10)
     @actors = [@player]
@@ -27,6 +28,8 @@ class GameWindow < Gosu::Window
     @camera.set_viewport(width, height)
 
     @camera.focus(@player.physical_attributes.body)
+
+    @physics = PhysicsCore.new
   end
 
   def update
@@ -35,6 +38,8 @@ class GameWindow < Gosu::Window
     @actors.each do |actor|
       actor.physical_attributes.body.update_position(update_interval)
     end
+
+    @physics.update(@world, @actors, update_interval)
   end
 
   def draw

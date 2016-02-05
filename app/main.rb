@@ -16,10 +16,8 @@ class GameWindow < Gosu::Window
     self.caption = 'Elterra'
 
     @tile_data = TileData.new(Tiles.load_tiles('media/tiles'))
-    @world = GameWorld.new(40, 40, Array.new(40*40, Block.new(1)))
-    (0..@world.width).each do |pos|
-      @world.set_block_at(pos, pos, Block.new(0))
-    end
+
+    @world = GameWorld.load('saves/test.elterra.save')
 
     @camera = Camera.new(@world, @tile_data)
   end

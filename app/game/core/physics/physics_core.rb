@@ -16,6 +16,12 @@ class PhysicsCore
     end
   end
 
+  def zero_rising_of(body)
+    if body.v.y < 0
+      body.v.y = 0
+    end
+  end
+
   def test_solid(x, y)
     trans_pos_x = (x/Block::width).floor
     trans_pos_y = (y/Block::height).floor
@@ -25,6 +31,10 @@ class PhysicsCore
 
   def touching_ground?(body)
     test_solid(body.p.x, body.p.y)
+  end
+
+  def touching_ceil?(body)
+    test_solid(body.p.x, body.p.y-Block::width)#*2)
   end
 
   def zero_left_movement_of(body)
@@ -56,6 +66,7 @@ class PhysicsCore
         attrs = actor.physical_attributes
         body = attrs.body
         zero_falling_of body if touching_ground? body
+        zero_rising_of body if touching_ceil? body
         zero_left_movement_of body if touching_left? body, actor.width
         zero_right_movement_of body if touching_right? body, actor.width
         attrs.shape.body.reset_forces

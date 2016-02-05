@@ -1,9 +1,11 @@
 require './game/core/entities/physical_attributes'
+require './game/core/world/block'
 require 'gosu'
+
 class Player
   attr_accessor :physical_attributes
   attr_reader :width, :height
-  def initialize(space, zorder, x, y)
+  def initialize(world, space, zorder, x, y)
     @image = Gosu::Image.new("media/util/test_player.bmp", :tileable => false)
     @width = @image.width
     @height = @image.height
@@ -15,6 +17,8 @@ class Player
     @physical_attributes = PhysicalAttributes.new(space, body, shape)
 
     @vx = 0.09
+
+    @world = world
   end
 
   def lerp_horizontal_to(val, denominator)
@@ -32,6 +36,17 @@ class Player
 
     if input.button_down? Gosu::KbSpace
       @physical_attributes.body.v.y = -0.1
+    end
+
+    (Gosu::Kb1..Gosu::Kb6).each do |digit_key|
+      if input.button_down? digit_key
+        x = (physical_attributes.body.p.x/Block::width).floor
+        y = (physical_attributes.body.p.y/Block::height).floor-1
+        id = digit_key-Gosu::Kb1
+        if @world.in_bounds? x, y
+          @world.set_block_at(x, y, Block.new(id))
+        end
+      end
     end
   end
 

@@ -7,9 +7,12 @@ module Tiles
   end
 
   def self.load_tiles(dirpath)
-    data_hash = load_tiles_json(dirpath+"/tilemap.json")
+    data_hash = load_tiles_json(dirpath+'/tilemap.json')
     name_binded_tile_images = Hash[data_hash['tiles'].map{
-        |tilename, tilepath| [tilename.intern, Gosu::Image.new(dirpath+"/"+tilepath, :tileable => true)]
+      |block_name, block_data| [
+          block_name.intern,
+          [Gosu::Image.new(dirpath+'/'+block_data['image_path'], :tileable => true), block_data['is_solid']]
+      ]
     }]
   end
 end

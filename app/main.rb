@@ -17,20 +17,27 @@ class GameWindow < Gosu::Window
 
     @tile_data = TileData.new(Tiles.load_tiles('media/tiles'))
     @world = GameWorld.new(40, 40, Array.new(40*40, Block.new(1)))
-    @world.set_block_at(0, 0, Block.new(0))
-    @world.set_block_at(10, 10, Block.new(0))
+    (0..@world.width).each do |pos|
+      @world.set_block_at(pos, pos, Block.new(0))
+    end
+
     @camera = Camera.new(@world, @tile_data)
   end
 
   def update
-    if(mouse_x)
-      @camera.position_x = mouse_x.round
+    if button_down? Gosu::KbLeft
+      @camera.position_x -= 1
     end
-    if(mouse_y)
-      @camera.position_y = mouse_y.round
+    if button_down? Gosu::KbRight
+      @camera.position_x += 1
     end
-    # || 0
-    #|| 0
+
+    if button_down? Gosu::KbUp
+      @camera.position_y -= 1
+    end
+    if button_down? Gosu::KbDown
+      @camera.position_y += 1
+    end
   end
 
   def draw

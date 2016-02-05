@@ -28,11 +28,11 @@ class Camera
 
     (0..@viewport_width).step(Block::width).each do |x|
       (0..@viewport_height).step(Block::height).each do |y|
-        trans_x = x+position_x
-        trans_y = y+position_y
-        next if trans_x < 0 || trans_y < 0 || trans_x >= @world.width*Block::width || trans_y >= @world.height*Block::height
+        trans_x = (x+position_x) / Block::width
+        trans_y = (y+position_y) / Block::height
+        next unless @world.in_bounds? trans_x, trans_y
 
-        block = @world.block_at(trans_x/Block::width, trans_y/Block::height)
+        block = @world.block_at(trans_x, trans_y)
         block_x = x - offset_x
         block_y = y - offset_y
 

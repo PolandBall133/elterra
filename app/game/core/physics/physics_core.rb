@@ -2,7 +2,7 @@ require './game/core/world/block'
 require './game/core/physics/world_tests'
 
 class PhysicsCore
-  GRAVITY = 0.0001
+  GRAVITY = 0.000_1
   SUBSTEPS = 5
 
   attr_accessor :space

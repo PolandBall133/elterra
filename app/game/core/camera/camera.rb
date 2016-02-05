@@ -10,13 +10,18 @@ class Camera
     @viewport_height = height
   end
 
+  def set_transform(x, y)
+    @transform_x = x
+    @transform_y = y
+  end
+
   def focus(physic_body)
     @focused_body = physic_body
   end
 
   def draw_tiles(zorder)
-    position_x = @focused_body.p.x.floor
-    position_y = @focused_body.p.y.floor
+    position_x = @focused_body.p.x.floor + @transform_x
+    position_y = @focused_body.p.y.floor + @transform_y
 
     offset_x = position_x % Block::width
     offset_y = position_y % Block::height
@@ -38,7 +43,9 @@ class Camera
 
   def draw_actors(actors)
     actors.each do |actor|
-      actor.draw(@viewport_width/2, @viewport_height/2)
+      relative_x = -@focused_body.p.x+@viewport_width/2
+      relative_y = -@focused_body.p.y+@viewport_height/2
+      actor.draw(relative_x, relative_y)
     end
   end
 end

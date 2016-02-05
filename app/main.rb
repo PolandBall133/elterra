@@ -26,6 +26,7 @@ class GameWindow < Gosu::Window
 
     @camera = Camera.new(@world, @tile_data)
     @camera.set_viewport(width, height)
+    @camera.set_transform(-width/2, -height/2)
 
     @camera.focus(@player.physical_attributes.body)
 
@@ -39,7 +40,7 @@ class GameWindow < Gosu::Window
       actor.physical_attributes.body.update_position(update_interval)
     end
 
-    @physics.update(@world, @actors, update_interval)
+    @physics.update(@world, @tile_data, @actors, update_interval)
   end
 
   def draw

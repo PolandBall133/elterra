@@ -1,0 +1,22 @@
+{
+  "walls": {
+    "none": {
+      "image_path": "sky-wall.jpg"
+    },
+    "dirt": {
+      "image_path": "dirt-wall.jpg"
+    },
+    "grass": {
+      "image_path": "grass-wall.jpg"
+    },
+    "stone": {
+      "image_path": "stone-wall.jpg"
+    },
+    "log": {
+      "image_path": "log-wall.jpg"
+    },
+    "leaves": {
+      "image_path": "leaves-wall.jpg"
+    }
+  }
+}

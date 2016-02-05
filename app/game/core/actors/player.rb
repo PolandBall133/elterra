@@ -27,10 +27,10 @@ class Player
 
   def handle_input(input)
     lerp_horizontal_to 0, 6
-    if input.button_down? Gosu::KbLeft
+    if input.button_down? Gosu::KbA
       lerp_horizontal_to -@vx, 4
     end
-    if input.button_down? Gosu::KbRight
+    if input.button_down? Gosu::KbD
       lerp_horizontal_to @vx, 4
     end
 
@@ -40,8 +40,8 @@ class Player
 
     (Gosu::Kb1..Gosu::Kb6).each do |digit_key|
       if input.button_down? digit_key
-        x = (physical_attributes.body.p.x/Block::width).floor
-        y = (physical_attributes.body.p.y/Block::height).floor-1
+        x = ((physical_attributes.body.p.x+input.mouse_x-input.width/2)/Block::width).floor
+        y = ((physical_attributes.body.p.y+input.mouse_y-input.height/2)/Block::height).floor
         id = digit_key-Gosu::Kb1
         if @world.in_bounds? x, y
           @world.set_block_at(x, y, Block.new(id))

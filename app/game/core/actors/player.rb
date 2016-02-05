@@ -27,6 +27,6 @@ class Player
   end
 
   def draw(x, y)
-    @image.draw(x-@image.width/2, y-@image.height/2, @zorder)
+    @image.draw(physical_attributes.body.p.x+x-@image.width/2, physical_attributes.body.p.y+y-@image.height, @zorder)
   end
 end

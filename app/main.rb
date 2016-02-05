@@ -1,15 +1,22 @@
 require 'gosu'
 
-require './game/core/tiles/load'
-require './game/core/tiles/tile_data'
+require './game/core/layers/load'
+require './game/core/layers/tile_data'
+
+require './game/core/layers/wall_data'
+
 require './game/core/world/game_world'
 require './game/core/world/block'
+require './game/core/world/wall'
+
 require './game/core/camera/camera'
+
 require './game/core/actors/player'
+
 require './game/core/physics/physics_core'
 
 module ZOrder
-  BACKGROUND, TILES, PLAYER, USER_INTERFACE = *0..3
+  BACKGROUND, TILES, WALLS, PLAYER, USER_INTERFACE = *0..4
 end
 
 class GameWindow < Gosu::Window
@@ -19,14 +26,16 @@ class GameWindow < Gosu::Window
     self.caption = 'Elterra'
 
     @tile_data = TileData.new(Tiles.load_tiles('media/tiles'))
+    @wall_data = WallData.new(Walls.load_walls('media/walls'))
 
     @world = GameWorld.load('saves/last_game.elterra.save')
 
     @physics = PhysicsCore.new
+
     @player = Player.new(@world, @physics.space, ZOrder::PLAYER, 10, 10)
     @actors = [@player]
 
-    @camera = Camera.new(@world, @tile_data)
+    @camera = Camera.new(@world, @tile_data, @wall_data)
     @camera.set_viewport(width, height)
     @camera.set_transform(-width/2, -height/2)
 
@@ -40,7 +49,7 @@ class GameWindow < Gosu::Window
   end
 
   def draw
-    @camera.draw_tiles(ZOrder::TILES)
+    @camera.draw(ZOrder::WALLS, ZOrder::TILES)
     @camera.draw_actors(@actors)
   end
 

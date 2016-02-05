@@ -13,6 +13,7 @@ module ZOrder
 end
 
 class GameWindow < Gosu::Window
+  attr_reader :world
   def initialize
     super 640, 480
     self.caption = 'Elterra'
@@ -22,7 +23,7 @@ class GameWindow < Gosu::Window
     @world = GameWorld.load('saves/mountain.elterra.save')
 
     @physics = PhysicsCore.new
-    @player = Player.new(@physics.space, ZOrder::PLAYER, 10, 10)
+    @player = Player.new(@world, @physics.space, ZOrder::PLAYER, 10, 10)
     @actors = [@player]
 
     @camera = Camera.new(@world, @tile_data)
@@ -50,3 +51,5 @@ end
 
 window = GameWindow.new
 window.show
+
+window.world.save("saves/last_game.elterra.save")

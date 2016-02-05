@@ -3,26 +3,32 @@ require 'gosu'
 class Player
   attr_accessor :physical_attributes
 
-  def initialize(zorder, x, y)
+  def initialize(space, zorder, x, y)
     @image = Gosu::Image.new("media/util/test_player.bmp", :tileable => false)
     @zorder = zorder
 
-    @physical_attributes = PhysicalAttributes.new(CP::Body.new(x, y), nil)
+    body = CP::Body.new(x, y)
+    shape = quad_shape(body, @image.width, @image.height)
+    @physical_attributes = PhysicalAttributes.new(space, body, shape)
+
+    @vx = 0.09
+  end
+
+  def lerp_horizontal_to(val, denominator)
+    @physical_attributes.body.v.x = @physical_attributes.body.v.lerpconst(CP::Vec2.new(val, 0), @vx/denominator).x
   end
 
   def handle_input(input)
+    lerp_horizontal_to 0, 6
     if input.button_down? Gosu::KbLeft
-      @physical_attributes.body.v.x -= 0.01
+      lerp_horizontal_to -@vx, 4
     end
     if input.button_down? Gosu::KbRight
-      @physical_attributes.body.v.x += 0.01
+      lerp_horizontal_to @vx, 4
     end
 
-    if input.button_down? Gosu::KbUp
-      @physical_attributes.body.v.y -= 0.01
-    end
-    if input.button_down? Gosu::KbDown
-      @physical_attributes.body.v.y += 0.01
+    if input.button_down? Gosu::KbSpace
+      @physical_attributes.body.v.y = -0.1
     end
   end
 

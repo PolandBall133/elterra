@@ -20,7 +20,7 @@ class GameWindow < Gosu::Window
 
     @tile_data = TileData.new(Tiles.load_tiles('media/tiles'))
 
-    @world = GameWorld.load('saves/mountain.elterra.save')
+    @world = GameWorld.load('saves/housing.elterra.save')
 
     @physics = PhysicsCore.new
     @player = Player.new(@world, @physics.space, ZOrder::PLAYER, 10, 10)

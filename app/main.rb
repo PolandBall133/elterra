@@ -21,7 +21,8 @@ class GameWindow < Gosu::Window
 
     @world = GameWorld.load('saves/playground.elterra.save')
 
-    @player = Player.new(ZOrder::PLAYER, 10, 10)
+    @physics = PhysicsCore.new
+    @player = Player.new(@physics.space, ZOrder::PLAYER, 10, 10)
     @actors = [@player]
 
     @camera = Camera.new(@world, @tile_data)
@@ -29,16 +30,10 @@ class GameWindow < Gosu::Window
     @camera.set_transform(-width/2, -height/2)
 
     @camera.focus(@player.physical_attributes.body)
-
-    @physics = PhysicsCore.new
   end
 
   def update
     @player.handle_input(self)
-
-    @actors.each do |actor|
-      actor.physical_attributes.body.update_position(update_interval)
-    end
 
     @physics.update(@world, @tile_data, @actors, update_interval)
   end

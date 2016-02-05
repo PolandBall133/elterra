@@ -1,2 +1,5 @@
 Gemfile.lock
 .idea
+
+#unwanted game files
+app/saves/last_game.elterra.save

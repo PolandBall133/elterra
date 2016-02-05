@@ -1,5 +1,7 @@
 require './game/core/entities/physical_attributes'
 require './game/core/world/block'
+require './game/core/world/wall'
+
 require 'gosu'
 
 class Player
@@ -44,7 +46,11 @@ class Player
         y = ((physical_attributes.body.p.y+input.mouse_y-input.height/2)/Block::height).floor
         id = digit_key-Gosu::Kb1
         if @world.in_bounds? x, y
-          @world.set_block_at(x, y, Block.new(id))
+          if input.button_down? Gosu::Kb0
+            @world.set_wall_at(x, y, Wall.new(id))
+          else
+            @world.set_block_at(x, y, Block.new(id))
+          end
         end
       end
     end

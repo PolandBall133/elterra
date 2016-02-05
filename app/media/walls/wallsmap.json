@@ -17,6 +17,9 @@
     },
     "leaves": {
       "image_path": "leaves-wall.jpg"
+    },
+    "cloud": {
+      "image_path": "cloud-wall.png"
     }
   }
 }

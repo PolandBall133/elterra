@@ -23,6 +23,10 @@
     "leaves": {
       "image_path": "leaves.jpg",
       "is_solid": true
+    },
+    "cloud": {
+      "image_path": "cloud.png",
+      "is_solid": true
     }
   }
 }

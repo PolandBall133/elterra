@@ -2,9 +2,12 @@ require './game/core/entities/physical_attributes'
 require 'gosu'
 class Player
   attr_accessor :physical_attributes
-
+  attr_reader :width, :height
   def initialize(space, zorder, x, y)
     @image = Gosu::Image.new("media/util/test_player.bmp", :tileable => false)
+    @width = @image.width
+    @height = @image.height
+
     @zorder = zorder
 
     body = CP::Body.new(x, y)

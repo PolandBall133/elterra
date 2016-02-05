@@ -15,6 +15,14 @@
     "stone": {
       "image_path": "stone.jpg",
       "is_solid": true
+    },
+    "log": {
+      "image_path": "log.jpg",
+      "is_solid": true
+    },
+    "leaves": {
+      "image_path": "leaves.jpg",
+      "is_solid": true
     }
   }
 }

@@ -19,12 +19,12 @@ class GameWorld
     @blocks[translate_position(xpos, ypos)] = val
   end
 
-  def self.load(path)
-    game_world = Marshal.load(File.binread(path))
-  end
-
   def in_bounds?(x, y)
     not (x < 0 || y < 0 || x >= @width || y >= @height)
+  end
+
+  def self.load(path)
+    game_world = Marshal.load(File.binread(path))
   end
 
   def save(path)

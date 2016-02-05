@@ -18,4 +18,12 @@ class GameWorld
   def set_block_at(xpos, ypos, val)
     @blocks[translate_position(xpos, ypos)] = val
   end
+
+  def self.load(path)
+    game_world = Marshal.load(File.binread(path))
+  end
+
+  def save(path)
+    File.open(path, 'wb') {|file| file.write(Marshal.dump(self))}
+  end
 end

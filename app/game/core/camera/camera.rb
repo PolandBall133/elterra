@@ -1,5 +1,3 @@
-require 'gosu'
-
 class Camera
   attr_accessor :position_x, :position_y
   def initialize(world, tile_data)
@@ -9,26 +7,21 @@ class Camera
   end
 
   def draw(zorder, screen_width, screen_height)
-    trans_width_halved = (screen_width / Block::width) / 2
-    trans_height_halved = (screen_height / Block::height) / 2
+    offset_x = position_x % Block::width
+    offset_y = position_y % Block::height
 
-    trans_y = position_y / Block::height
-    trans_x = position_x / Block::width
+    (0..screen_width).step(Block::width).each do |x|
+      (0..screen_height).step(Block::height).each do |y|
+        trans_x = x+position_x
+        trans_y = y+position_y
+        next if trans_x < 0 || trans_y < 0 || trans_x >= @world.width*Block::width || trans_y >= @world.height*Block::height
 
-    begin_y = trans_y-trans_height_halved
-    begin_x = trans_x-trans_width_halved
+        block = @world.block_at(trans_x/Block::width, trans_y/Block::height)
+        block_x = x - offset_x
+        block_y = y - offset_y
 
-    end_y = trans_y+trans_height_halved
-    end_x = trans_x+trans_width_halved
-
-    begin_y.upto end_y do |y|
-      begin_x.upto end_x do |x|
-        if y >= 0 && x >= 0 && y < @world.height && x < @world.width
-          block = @world.block_at(x, y)
-          @tile_data.ids[block.id].image.draw(position_x+x*Block::width, position_y+y*Block::height, zorder)
-        end
+        @tile_data.ids[block.id].image.draw(block_x, block_y, zorder)
       end
     end
   end
-
 end

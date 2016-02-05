@@ -34,7 +34,7 @@ class PhysicsCore
   end
 
   def touching_ceil?(body)
-    test_solid(body.p.x, body.p.y-Block::width)#*2)
+    test_solid(body.p.x, body.p.y-Block::width)
   end
 
   def zero_left_movement_of(body)

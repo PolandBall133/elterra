@@ -1,7 +1,8 @@
 class Camera
-  def initialize(world, tile_data)
+  def initialize(world, tile_data, wall_data)
     @world = world
     @tile_data = tile_data
+    @wall_data = wall_data
     @position_x = @position_y = 0
   end
 
@@ -19,7 +20,7 @@ class Camera
     @focused_body = physic_body
   end
 
-  def draw_tiles(zorder)
+  def draw(wall_zorder, tile_zorder)
     position_x = @focused_body.p.x.floor + @transform_x
     position_y = @focused_body.p.y.floor + @transform_y
 
@@ -33,10 +34,14 @@ class Camera
         next unless @world.in_bounds? trans_x, trans_y
 
         block = @world.block_at(trans_x, trans_y)
-        block_x = x - offset_x
-        block_y = y - offset_y
+        wall = @world.wall_at(trans_x, trans_y)
+        final_x = x - offset_x
+        final_y = y - offset_y
 
-        @tile_data.ids[block.id].image.draw(block_x, block_y, zorder)
+        @tile_data.ids[block.id].image.draw(final_x, final_y, tile_zorder)
+        if block.id == 0
+          @wall_data.ids[wall.id].image.draw(final_x, final_y, wall_zorder)
+        end
       end
     end
   end

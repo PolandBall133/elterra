@@ -1,10 +1,11 @@
 class GameWorld
-  attr_accessor :blocks
+  attr_accessor :blocks, :walls
   attr_reader :width, :height
-  def initialize(width, height, blocks)
+  def initialize(width, height, blocks, walls)
     @width = width
     @height = height
     @blocks = blocks
+    @walls = walls
   end
 
   def translate_position(xpos, ypos)
@@ -17,6 +18,14 @@ class GameWorld
 
   def set_block_at(xpos, ypos, val)
     @blocks[translate_position(xpos, ypos)] = val
+  end
+
+  def wall_at(xpos, ypos)
+    @walls[translate_position(xpos, ypos)]
+  end
+
+  def set_wall_at(xpos, ypos, val)
+    @walls[translate_position(xpos, ypos)] = val
   end
 
   def in_bounds?(x, y)

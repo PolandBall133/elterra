@@ -50,11 +50,11 @@ class PhysicsCore
   end
 
   def touching_left?(body, width)
-    test_solid(body.p.x-1, body.p.y-1)
+    test_solid(body.p.x-width/2, body.p.y-1)
   end
 
   def touching_right?(body, width)
-    test_solid(body.p.x+1, body.p.y-1)
+    test_solid(body.p.x+width/2-1, body.p.y-1)
   end
 
   def update(world, tile_data, actors, dt)

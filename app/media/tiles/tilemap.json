@@ -1,6 +1,20 @@
 {
   "tiles": {
-    "dirt": "dirt.jpg",
-    "stone": "stone.jpg"
+    "none": {
+      "image_path": "sky.jpg",
+      "is_solid": false
+    },
+    "dirt": {
+      "image_path": "dirt.jpg",
+      "is_solid": true
+    },
+    "grass": {
+      "image_path": "grass.jpg",
+      "is_solid": true
+    },
+    "stone": {
+      "image_path": "stone.jpg",
+      "is_solid": true
+    }
   }
 }

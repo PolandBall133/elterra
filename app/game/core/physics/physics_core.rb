@@ -1,4 +1,6 @@
 require './game/core/world/block'
+require './game/core/physics/world_tests'
+
 class PhysicsCore
   GRAVITY = 0.0001
   SUBSTEPS = 5
@@ -22,21 +24,6 @@ class PhysicsCore
     end
   end
 
-  def test_solid(x, y)
-    trans_pos_x = (x/Block::width).floor
-    trans_pos_y = (y/Block::height).floor
-    return unless @world.in_bounds? trans_pos_x, trans_pos_y
-    @tile_data.ids[@world.block_at(trans_pos_x, trans_pos_y).id].is_solid
-  end
-
-  def touching_ground?(body)
-    test_solid(body.p.x, body.p.y)
-  end
-
-  def touching_ceil?(body)
-    test_solid(body.p.x, body.p.y-Block::width)
-  end
-
   def zero_left_movement_of(body)
     if(body.v.x < 0)
       body.v.x = 0.0
@@ -49,26 +36,21 @@ class PhysicsCore
     end
   end
 
-  def touching_left?(body, width)
-    test_solid(body.p.x-width/2, body.p.y-1)
-  end
 
-  def touching_right?(body, width)
-    test_solid(body.p.x+width/2-1, body.p.y-1)
-  end
 
   def update(world, tile_data, actors, dt)
     @world = world
+    @world_test = WorldTests.new(world, tile_data)
     @tile_data = tile_data
 
     SUBSTEPS.times do
       actors.each do |actor|
         attrs = actor.physical_attributes
         body = attrs.body
-        zero_falling_of body if touching_ground? body
-        zero_rising_of body if touching_ceil? body
-        zero_left_movement_of body if touching_left? body, actor.width
-        zero_right_movement_of body if touching_right? body, actor.width
+        zero_falling_of body if @world_test.touching_ground? body, actor.width
+        zero_rising_of body if @world_test.touching_ceil? body, actor.width
+        zero_left_movement_of body if @world_test.touching_left? body, actor.width
+        zero_right_movement_of body if @world_test.touching_right? body, actor.width
         attrs.shape.body.reset_forces
       end
       @space.step(dt)

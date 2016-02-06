@@ -1,3 +1,5 @@
+require 'matrix'
+
 class WorldTests
   COLLISION_EPSILON = 1
   def initialize(world, tile_data)
@@ -32,5 +34,24 @@ class WorldTests
 
   def touching_right?(body, width)
     test_solid(body.p.x+width/2, body.p.y-1)
+  end
+end
+
+module AdjacencyMatrix
+  UP_OFFSET = 1
+  DOWN_OFFSET = 1
+  LEFT_OFFSET = 1
+  RIGHT_OFFSET = 1
+  HORIZONTAL_OFFSETS = LEFT_OFFSET + RIGHT_OFFSET
+  VERTICAL_OFFSETS = UP_OFFSET + DOWN_OFFSET
+
+  def self.check_solidity_near(world, tile_data, actor)
+    rect = actor.translated_rect
+    matrix = Matrix.zero(rect[:width]+HORIZONTAL_OFFSETS, rect[:height]+VERTICAL_OFFSETS)
+    matrix.each_with_index.map{ |element, x, y|
+      trans_x = x+rect[:x]
+      trans_y = y+rect[:y]
+      (world.in_bounds? trans_x, trans_y)? tile_data.ids[world.block_at(trans_x, trans_y).id].is_solid : nil
+    }
   end
 end

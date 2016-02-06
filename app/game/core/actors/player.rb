@@ -1,39 +1,25 @@
 require './game/core/entities/physical_attributes'
 require './game/core/world/block'
 require './game/core/world/wall'
-
+require './game/core/actors/base_actor'
 require 'gosu'
 
-class Player
-  attr_accessor :physical_attributes
-  attr_reader :width, :height
+class Player < BaseActor
   def initialize(world, space, zorder, x, y)
-    @image = Gosu::Image.new("media/util/test_player.bmp", :tileable => false)
-    @width = @image.width
-    @height = @image.height
-
-    @zorder = zorder
-
-    body = CP::Body.new(x, y)
-    shape = quad_shape(body, @image.width, @image.height)
-    @physical_attributes = PhysicalAttributes.new(space, body, shape)
+    image = Gosu::Image.new("media/util/test_player.bmp", :tileable => false)
+    super(space, x, y, image, zorder)
 
     @vx = 0.09
-
     @world = world
   end
 
-  def lerp_horizontal_to(val, denominator)
-    @physical_attributes.body.v.x = @physical_attributes.body.v.lerpconst(CP::Vec2.new(val, 0), @vx/denominator).x
-  end
-
   def handle_input(input)
-    lerp_horizontal_to 0, 6
+    lerp_horizontally_to 0, 6
     if input.button_down? Gosu::KbA
-      lerp_horizontal_to -@vx, 4
+      lerp_horizontally_to -@vx, 4
     end
     if input.button_down? Gosu::KbD
-      lerp_horizontal_to @vx, 4
+      lerp_horizontally_to @vx, 4
     end
 
     if input.button_down? Gosu::KbSpace
@@ -54,9 +40,5 @@ class Player
         end
       end
     end
-  end
-
-  def draw(x, y)
-    @image.draw(physical_attributes.body.p.x+x-@image.width/2, physical_attributes.body.p.y+y-@image.height, @zorder)
   end
 end

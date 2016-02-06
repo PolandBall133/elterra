@@ -6,7 +6,7 @@ require 'gosu'
 
 class Player < BaseActor
   def initialize(world, space, zorder, x, y)
-    image = Gosu::Image.new("media/util/test_player.bmp", :tileable => false)
+    image = Gosu::Image.new('media/util/test_player.bmp', :tileable => false)
     super(space, x, y, image, zorder)
 
     @vx = 0.09

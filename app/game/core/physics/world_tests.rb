@@ -4,6 +4,7 @@ class WorldTests
     @world = world
     @tile_data = tile_data
   end
+  #todo: use collision matrix for testing
 
   def test_solid(x, y)
     trans_pos_x = (x/Block::width).floor

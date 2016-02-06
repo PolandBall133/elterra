@@ -70,30 +70,3 @@ describe GameWorld do
     end
   end
 end
-
-=begin
-
-  describe '#blocks access' do
-    it 'first element is in bounds and is a proper instance' do
-      x, y = 0, 0
-      assert_instance_of Block, @world.block_at(x, y)
-    end
-
-    it 'last element is in bounds and is a proper instance' do
-      x, y = @world.width-1, @world.height-1
-      assert_instance_of Block, @world.block_at(x, y)
-    end
-  end
-
-  describe '#walls access' do
-    it 'first element is in bounds and is a proper instance' do
-      x, y = 0, 0
-      assert_instance_of Wall, @world.walls_at(x, y)
-    end
-
-    it 'last element is in bounds and is a proper instance' do
-      x, y = @world.width-1, @world.height-1
-      assert_instance_of Wall, @world.wall_at(x, y)
-    end
-  end
-=end

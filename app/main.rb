@@ -28,7 +28,9 @@ class GameWindow < Gosu::Window
     @tile_data = TileData.new(Tiles.load_tiles('media/tiles'))
     @wall_data = WallData.new(Walls.load_walls('media/walls'))
 
-    @world = GameWorld.load('saves/last_game.elterra.save')
+    @save_file = 'saves/last_game.elsave'
+    @save_file = ARGV[0] if !ARGV[0].nil?
+    @world = GameWorld.load(@save_file)
 
     @physics = PhysicsCore.new
 
@@ -61,4 +63,4 @@ end
 window = GameWindow.new
 window.show
 
-window.world.save("saves/last_game.elterra.save")
+window.world.save("saves/last_game.elsave")

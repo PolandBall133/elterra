@@ -3,3 +3,4 @@ Gemfile.lock
 
 #unwanted game files
 app/saves/last_game.elterra.save
+app/saves/last_game.elsave

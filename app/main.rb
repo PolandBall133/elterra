@@ -33,7 +33,7 @@ class GameWindow < Gosu::Window
     @physics = PhysicsCore.new
 
     @player = Player.new(@world, @physics.space, ZOrder::PLAYER, 10, 10)
-    @actors = [@player]
+    @actors = [@player]#, BaseActor.new(@physics.space, 100, 100, Gosu::Image.new('media/util/test_player.bmp'), ZOrder::PLAYER)]
 
     @camera = Camera.new(@world, @tile_data, @wall_data)
     @camera.set_viewport(width, height)

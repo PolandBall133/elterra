@@ -19,4 +19,12 @@ class BaseActor
   def draw(x, y)
     @image.draw(physical_attributes.body.p.x+x-@image.width/2, physical_attributes.body.p.y+y-@image.height, @zorder)
   end
+
+  def translated_rect
+    body = @physical_attributes.body
+    {:x => (body.p.x/Block::width).floor,
+     :y =>(body.p.y/Block::height).floor,
+     :width => @width/Block::width,
+     :height => @height/Block::height}
+  end
 end

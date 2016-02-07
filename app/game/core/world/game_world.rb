@@ -1,7 +1,7 @@
 require './game/core/world/static_layer'
 
 class GameWorld
-  attr_reader :width, :height
+  attr_reader :width, :height, :layers
   def initialize(width, height, *raw_layers)
     @width = width
     @height = height

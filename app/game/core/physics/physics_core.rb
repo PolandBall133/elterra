@@ -45,7 +45,7 @@ class PhysicsCore
 
     SUBSTEPS.times do
       actors.each do |actor|
-        puts AdjacencyMatrix.check_solidity_near world, tile_data, actor
+        #puts AdjacencyMatrix.check_solidity_near world, tile_data, actor
         attrs = actor.physical_attributes
         body = attrs.body
         zero_falling_of body if @world_test.touching_ground? body, actor.width

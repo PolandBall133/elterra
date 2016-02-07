@@ -1,31 +1,28 @@
+require './game/core/world/static_layer'
+
 class GameWorld
-  attr_accessor :blocks, :walls
   attr_reader :width, :height
-  def initialize(width, height, blocks, walls)
+  def initialize(width, height, *raw_layers)
     @width = width
     @height = height
-    @blocks = blocks
-    @walls = walls
+
+    @layers = raw_layers.map{ |data| StaticLayer.new(width, height, data) }
+  end
+
+  def blocks
+    @layers[PredefStaticLayers::BLOCKS]
+  end
+
+  def walls
+    @layers[PredefStaticLayers::WALLS]
+  end
+
+  def layer(id)
+    @layers[id]
   end
 
   def translate_position(xpos, ypos)
     xpos*@height+ypos
-  end
-
-  def block_at(xpos, ypos)
-    @blocks[translate_position(xpos, ypos)]
-  end
-
-  def set_block_at(xpos, ypos, val)
-    @blocks[translate_position(xpos, ypos)] = val
-  end
-
-  def wall_at(xpos, ypos)
-    @walls[translate_position(xpos, ypos)]
-  end
-
-  def set_wall_at(xpos, ypos, val)
-    @walls[translate_position(xpos, ypos)] = val
   end
 
   def in_bounds?(x, y)

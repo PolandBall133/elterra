@@ -12,7 +12,7 @@ class WorldTests
     trans_pos_x = (x/Block::width).floor
     trans_pos_y = (y/Block::height).floor
     return unless @world.in_bounds? trans_pos_x, trans_pos_y
-    @tile_data.ids[@world.block_at(trans_pos_x, trans_pos_y).id].is_solid
+    @tile_data.ids[@world.blocks.at(trans_pos_x, trans_pos_y).id].is_solid
   end
 
   def touching_ground?(body, width)
@@ -51,7 +51,7 @@ module AdjacencyMatrix
     matrix.each_with_index.map{ |element, x, y|
       trans_x = x+rect[:x]
       trans_y = y+rect[:y]
-      (world.in_bounds? trans_x, trans_y)? tile_data.ids[world.block_at(trans_x, trans_y).id].is_solid : nil
+      (world.in_bounds? trans_x, trans_y)? tile_data.ids[world.blocks.at(trans_x, trans_y).id].is_solid : nil
     }
   end
 end

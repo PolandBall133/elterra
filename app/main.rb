@@ -6,6 +6,7 @@ require './game/core/layers/tile_data'
 require './game/core/layers/wall_data'
 
 require './game/core/world/game_world'
+require './game/core/world/static_layer'
 require './game/core/world/block'
 require './game/core/world/wall'
 
@@ -28,13 +29,17 @@ class GameWindow < Gosu::Window
     @tile_data = TileData.new(Tiles.load_tiles('media/tiles'))
     @wall_data = WallData.new(Walls.load_walls('media/walls'))
 
-    @save_file = ARGV[0] || 'saves/last_game.elsave'
-    @world = GameWorld.load(@save_file)
+    save_file = ARGV[0] || 'saves/last_game.elsave'
+    @world = if save_file.nil?
+       GameWorld.new(1000, 1000, [Block.new(0)]*1000*1000, [Wall.new(0)]*1000*1000)
+     else
+       GameWorld.load(save_file)
+     end
 
     @physics = PhysicsCore.new
 
-    @player = Player.new(@world, @physics.space, ZOrder::PLAYER, 10, 10)
-    @actors = [@player]#, BaseActor.new(@physics.space, 100, 100, Gosu::Image.new('media/util/test_player.bmp'), ZOrder::PLAYER)]
+    @player = Player.new(@world, @physics.space, ZOrder::PLAYER, 10.0, 1000, 1000)
+    @actors = [@player]
 
     @camera = Camera.new(@world, @tile_data, @wall_data)
     @camera.set_viewport(width, height)

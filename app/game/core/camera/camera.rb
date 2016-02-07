@@ -33,8 +33,8 @@ class Camera
         trans_y = (y+position_y) / Block::height
         next unless @world.in_bounds? trans_x, trans_y
 
-        block = @world.block_at(trans_x, trans_y)
-        wall = @world.wall_at(trans_x, trans_y)
+        block = @world.blocks.at(trans_x, trans_y)
+        wall = @world.walls.at(trans_x, trans_y)
         final_x = x - offset_x
         final_y = y - offset_y
 

@@ -28,8 +28,7 @@ class GameWindow < Gosu::Window
     @tile_data = TileData.new(Tiles.load_tiles('media/tiles'))
     @wall_data = WallData.new(Walls.load_walls('media/walls'))
 
-    @save_file = 'saves/last_game.elsave'
-    @save_file = ARGV[0] if !ARGV[0].nil?
+    @save_file = ARGV[0] || 'saves/last_game.elsave'
     @world = GameWorld.load(@save_file)
 
     @physics = PhysicsCore.new

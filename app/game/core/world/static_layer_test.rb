@@ -3,7 +3,7 @@ require 'minitest/autorun'
 require_relative 'static_layer'
 
 describe StaticLayer do
-  describe '#creation of empty layer' do
+  describe 'creation of empty layer' do
     empty = StaticLayer.new(0, 0, nil)
 
     it 'has no width' do

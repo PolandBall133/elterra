@@ -27,6 +27,10 @@
     "cloud": {
       "image_path": "cloud.png",
       "is_solid": true
+    },
+    "wooden_planks": {
+      "image_path": "wooden_planks.jpg",
+      "is_solid": true
     }
   }
 }

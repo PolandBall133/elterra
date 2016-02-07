@@ -26,7 +26,7 @@ class Player < BaseActor
       @physical_attributes.body.v.y = -0.1
     end
 
-    (Gosu::Kb1..Gosu::Kb7).each do |digit_key|
+    (Gosu::Kb1..Gosu::Kb8).each do |digit_key|
       if input.button_down? digit_key
         x = ((physical_attributes.body.p.x+input.mouse_x-input.width/2)/Block::width).floor
         y = ((physical_attributes.body.p.y+input.mouse_y-input.height/2)/Block::height).floor

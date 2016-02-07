@@ -20,6 +20,9 @@
     },
     "cloud": {
       "image_path": "cloud-wall.png"
+    },
+    "wooden_planks": {
+      "image_path": "wooden_planks-wall.jpg"
     }
   }
 }

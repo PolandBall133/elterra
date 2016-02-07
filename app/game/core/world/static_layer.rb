@@ -4,8 +4,7 @@ module PredefStaticLayers
 end
 
 class StaticLayer
-  attr_reader :width, :height
-
+  attr_reader :width, :height, :data
   def initialize(width, height, data)
     @width = width
     @height = height

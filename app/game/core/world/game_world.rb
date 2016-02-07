@@ -1,4 +1,4 @@
-require './game/core/world/static_layer'
+require_relative 'static_layer'
 
 class GameWorld
   attr_reader :width, :height, :layers

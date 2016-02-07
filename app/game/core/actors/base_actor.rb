@@ -2,8 +2,10 @@ class BaseActor
   attr_accessor :physical_attributes
   attr_reader :width, :height, :zorder
 
-  def initialize(space, x, y, image, zorder)
-    body = CP::Body.new(x, y)
+  def initialize(space, mass, x, y, image, zorder)
+    interia = 1 #ignored
+    body = CP::Body.new(mass, interia)
+    body.p = CP::Vec2.new(x, y)
     shape = quad_shape(body, image.width, image.height)
     @physical_attributes = PhysicalAttributes.new(space, body, shape)
     @image = image

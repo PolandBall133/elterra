@@ -5,9 +5,9 @@ require './game/core/actors/base_actor'
 require 'gosu'
 
 class Player < BaseActor
-  def initialize(world, space, zorder, x, y)
+  def initialize(world, space, zorder, mass, x, y)
     image = Gosu::Image.new('media/util/test_player.bmp', :tileable => false)
-    super(space, x, y, image, zorder)
+    super(space, mass, x, y, image, zorder)
 
     @vx = 0.09
     @world = world
@@ -33,9 +33,9 @@ class Player < BaseActor
         id = digit_key-Gosu::Kb1
         if @world.in_bounds? x, y
           if input.button_down? Gosu::Kb0
-            @world.set_wall_at(x, y, Wall.new(id))
+            @world.walls.set_at(x, y, Wall.new(id))
           else
-            @world.set_block_at(x, y, Block.new(id))
+            @world.blocks.set_at(x, y, Block.new(id))
           end
         end
       end
